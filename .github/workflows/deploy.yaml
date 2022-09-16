@@ -41,9 +41,11 @@ jobs:
       - name: Deploy to production
         run: |
           rsync -avz --delete --safe-links --exclude=.git ./ github@${DEST_HOST}:${DEST_DIR}
-          cp ~/secrets.env /opt/docker/secrets.env
-          cd /opt/docker/secrets.env
-          podman-compose pull && podman-compose up -d
+          ssh github@${DEST_HOST} <<EOF
+              cp /home/github/secrets.env /opt/docker/secrets.env
+              cd /opt/docker/secrets.env
+              podman-compose pull && podman-compose up -dS
+          EOF
 
 env: 
   # Destination hostname
@@ -53,6 +55,5 @@ env:
   # ssh_known_hosts file
   SSH_KNOWN_HOSTS: |-
     beijaflor.es ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgBHuMbo4un1kUg964oEWqZ71h503GcPxbCwZQLMq8T 
-
 
 #  vim: set ts=4 sw=2 tw=88 et :
