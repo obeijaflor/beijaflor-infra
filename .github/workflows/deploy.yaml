@@ -44,7 +44,7 @@ jobs:
           ssh github@${DEST_HOST} <<EOF
               install -m 600 /home/github/secrets.env /opt/docker/secrets.env
               cd /opt/docker
-              docker-compose pull && docker-compose up -d
+              docker compose pull && docker compose up -d
           EOF
 
 env: 
