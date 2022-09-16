@@ -13,12 +13,27 @@ services:
     image: redis:7.0.4-alpine3.16
     restart: always
 
-  app:
+  nextcloud:
     image: nextcloud:24.0.5-fpm-alpine
     restart: always
     volumes:
-      - nextcloud:/var/www/html
+      - nextcloud:/var/www/nextcloud
       - /mnt/data:/mnt/data
+    depends_on:
+      - db
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+    env_file:
+      - secrets.env
+
+  dnd_wiki:
+    image: mediawiki:1.38.2-fpm-alpine
+    restart: always
+    volumes:
+      - dnd-wiki_images:/var/www/dnd-wiki/images
+      - ./dnd-wiki/LocalSettings.php:/var/www/dnd-wiki/LocalSettings.php
     depends_on:
       - db
       - redis
@@ -32,14 +47,17 @@ services:
     build: ./web
     restart: always
     volumes:
-      - nextcloud:/var/www/html:ro
+      - beijaflor.es:/var/www/beijaflor.es:ro
+      - nextcloud:/var/www/nextcloud:ro
+      - links.beijaflor.es:/var/www/links.beijaflor.es:ro
+      - blog.beijaflor.es:/var/www/blog.beijaflor.es:ro
       - /mnt/data:/mnt/data:ro
     environment:
       - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
       - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
       - LETSENCRYPT_EMAIL=rachel@beijaflor.es
     depends_on:
-      - app
+      - nextcloud
     networks:
       - default
       - proxy-tier
@@ -48,7 +66,7 @@ services:
     image: nextcloud:24.0.5-fpm-alpine
     restart: always
     volumes:
-      - nextcloud:/var/www/html
+      - nextcloud:/var/www/nextcloud
       - /mnt/data:/mnt/data
     entrypoint: /cron.sh
     depends_on:
@@ -103,6 +121,10 @@ services:
 volumes:
   db:
   nextcloud:
+  beijaflor.es:
+  links.beijaflor.es:
+  blog.beijaflor.es:
+  dnd-wiki_images:
   certs:
   acme:
   vhost.d:
