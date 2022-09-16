@@ -18,6 +18,7 @@ services:
     restart: always
     volumes:
       - nextcloud:/var/www/html
+      - /mnt/data:/mnt/data
     depends_on:
       - db
       - redis
@@ -32,9 +33,10 @@ services:
     restart: always
     volumes:
       - nextcloud:/var/www/html:ro
+      - /mnt/data:/mnt/data:ro
     environment:
-      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
-      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
+      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
+      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
       - LETSENCRYPT_EMAIL=rachel@beijaflor.es
     depends_on:
       - app
@@ -47,6 +49,7 @@ services:
     restart: always
     volumes:
       - nextcloud:/var/www/html
+      - /mnt/data:/mnt/data
     entrypoint: /cron.sh
     depends_on:
       - db
