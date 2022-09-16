@@ -44,7 +44,7 @@ jobs:
           ssh github@${DEST_HOST} <<EOF
               install -m 600 /home/github/secrets.env /opt/docker/secrets.env
               cd /opt/docker
-              podman-compose pull && podman-compose up -dS
+              podman-compose pull && podman-compose up -d
           EOF
 
 env: 
