@@ -42,7 +42,6 @@ services:
       - app
     networks:
       - proxy-tier
-      - default
 
   cron:
     image: nextcloud:24.0.5-fpm-alpine
