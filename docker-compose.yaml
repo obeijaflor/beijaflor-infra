@@ -47,14 +47,13 @@ services:
     build: ./web
     restart: always
     volumes:
-      - beijaflor.es:/var/www/beijaflor.es:ro
-      - nextcloud:/var/www/nextcloud:ro
-      - links.beijaflor.es:/var/www/links.beijaflor.es:ro
-      - blog.beijaflor.es:/var/www/blog.beijaflor.es:ro
+      - /opt/repos/beijaflor.es:/var/www/beijaflor.es:ro
+      - /opt/repos/links.beijaflor.es:/var/www/links.beijaflor.es:ro
+      - nextcloud:/var/www/cloud.beijaflor.es:ro
       - /mnt/data:/mnt/data:ro
     environment:
-      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
-      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,blog.beijaflor.es
+      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
+      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
       - LETSENCRYPT_EMAIL=rachel@beijaflor.es
     depends_on:
       - nextcloud
@@ -62,7 +61,7 @@ services:
       - default
       - proxy-tier
 
-  cron:
+  nextcloud_cron:
     image: nextcloud:24.0.5-fpm-alpine
     restart: always
     volumes:
@@ -89,7 +88,7 @@ services:
     networks:
       - proxy-tier
 
-  letsencrypt-companion:
+  letsencrypt_companion:
     image: nginxproxy/acme-companion:2.2.1
     restart: always
     volumes:
@@ -121,9 +120,6 @@ services:
 volumes:
   db:
   nextcloud:
-  beijaflor.es:
-  links.beijaflor.es:
-  blog.beijaflor.es:
   dnd-wiki_images:
   certs:
   acme:
