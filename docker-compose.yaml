@@ -17,7 +17,7 @@ services:
     image: nextcloud:24.0.5-fpm-alpine
     restart: always
     volumes:
-      - nextcloud:/var/www/nextcloud
+      - nextcloud:/var/www/html
       - /mnt/data:/mnt/data
     depends_on:
       - db
@@ -32,9 +32,9 @@ services:
     image: mediawiki:1.38.2-fpm-alpine
     restart: always
     volumes:
-      - dnd-wiki:/var/www/dnd-wiki
-      - dnd-wiki_images:/var/www/dnd-wiki/images
-      - ./dnd-wiki/LocalSettings.php:/var/www/dnd-wiki/LocalSettings.php
+      - dnd-wiki:/var/www/html
+      - dnd-wiki_images:/var/www/html/images
+      - ./dnd-wiki/LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on:
       - db
       - redis
@@ -43,6 +43,17 @@ services:
       - POSTGRES_HOST=db
     env_file:
       - secrets.env
+
+  nextcloud_cron:
+    image: nextcloud:24.0.5-fpm-alpine
+    restart: always
+    volumes:
+      - nextcloud:/var/www/html
+      - /mnt/data:/mnt/data
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+      - redis
 
   web:
     build: ./web
@@ -63,17 +74,6 @@ services:
     networks:
       - default
       - proxy-tier
-
-  nextcloud_cron:
-    image: nextcloud:24.0.5-fpm-alpine
-    restart: always
-    volumes:
-      - nextcloud:/var/www/nextcloud
-      - /mnt/data:/mnt/data
-    entrypoint: /cron.sh
-    depends_on:
-      - db
-      - redis
 
   proxy:
     build: ./proxy
