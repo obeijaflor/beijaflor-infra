@@ -32,6 +32,7 @@ services:
     image: mediawiki:1.38.2-fpm-alpine
     restart: always
     volumes:
+      - dnd-wiki:/var/www/dnd-wiki
       - dnd-wiki_images:/var/www/dnd-wiki/images
       - ./dnd-wiki/LocalSettings.php:/var/www/dnd-wiki/LocalSettings.php
     depends_on:
@@ -49,6 +50,8 @@ services:
     volumes:
       - /opt/repos/beijaflor.es:/var/www/beijaflor.es:ro
       - /opt/repos/links.beijaflor.es:/var/www/links.beijaflor.es:ro
+      - dnd-wiki:/var/www/dnd-wiki:ro
+      - dnd-wiki_images:/var/www/dnd-wiki/images:ro
       - nextcloud:/var/www/cloud.beijaflor.es:ro
       - /mnt/data:/mnt/data:ro
     environment:
@@ -120,6 +123,7 @@ services:
 volumes:
   db:
   nextcloud:
+  dnd-wiki:
   dnd-wiki_images:
   certs:
   acme:
