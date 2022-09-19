@@ -59,15 +59,15 @@ services:
     build: ./web
     restart: always
     volumes:
-      - /opt/repos/beijaflor.es:/var/www/beijaflor.es:ro
-      - /opt/repos/links.beijaflor.es:/var/www/links.beijaflor.es:ro
-      - dnd-wiki:/var/www/dnd-wiki:ro
-      - dnd-wiki_images:/var/www/dnd-wiki/images:ro
-      - nextcloud:/var/www/cloud.beijaflor.es:ro
+      - /opt/repos/beijaflor.es:/var/www/html/beijaflor.es:ro
+      - /opt/repos/links.beijaflor.es:/var/www/html/links.beijaflor.es:ro
+      - nextcloud:/var/www/html/cloud.beijaflor.es:ro
+      - dnd-wiki:/var/www/html/wiki.beijaflor.es:ro
+      - dnd-wiki_images:/var/www/html/wiki.beijaflor.es/images:ro
       - /mnt/data:/mnt/data:ro
     environment:
-      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
-      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es
+      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,wiki.beijaflor.es
+      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,wiki.beijaflor.es
       - LETSENCRYPT_EMAIL=rachel@beijaflor.es
     depends_on:
       - nextcloud
@@ -105,20 +105,20 @@ services:
     depends_on:
       - proxy
 
-# self signed
-#  omgwtfssl:
-#    image: paulczar/omgwtfssl
-#    restart: "no"
-#    volumes:
-#      - certs:/certs
-#    environment:
-#      - SSL_SUBJECT=servhostname.local
-#      - CA_SUBJECT=my@example.com
-#      - SSL_KEY=/certs/servhostname.local.key
-#      - SSL_CSR=/certs/servhostname.local.csr
-#      - SSL_CERT=/certs/servhostname.local.crt
-#    networks:
-#      - proxy-tier
+  # self signed
+  # omgwtfssl:
+  #   image: paulczar/omgwtfssl
+  #   restart: "no"
+  #   volumes:
+  #     - certs:/certs
+  #   environment:
+  #     - SSL_SUBJECT=beijaflor.es
+  #     - CA_SUBJECT=rachel@beijaflor.es
+  #     - SSL_KEY=/certs/beijaflor.es.key
+  #     - SSL_CSR=/certs/beijaflor.es.csr
+  #     - SSL_CERT=/certs/beijaflor.es.crt
+  #   networks:
+  #     - proxy-tier
 
 volumes:
   db:
