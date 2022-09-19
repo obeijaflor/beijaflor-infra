@@ -61,7 +61,7 @@ services:
       - /opt/repos/beijaflor.es:/var/www/html/beijaflor.es:ro
       - /opt/repos/links.beijaflor.es:/var/www/html/links.beijaflor.es:ro
       - nextcloud:/var/www/html/cloud.beijaflor.es:ro
-      - dnd-wiki:/var/www/html/wiki.beijaflor.es:ro
+      - dnd-wiki:/var/www/html/dnd.beijaflor.es:ro
       - /mnt/data:/mnt/data:ro
     environment:
       - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,dnd.beijaflor.es
