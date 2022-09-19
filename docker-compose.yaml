@@ -29,7 +29,8 @@ services:
       - secrets.env
 
   dnd_wiki:
-    image: mediawiki:1.38.2-fpm-alpine
+    # image: mediawiki:1.38.2-fpm-alpine
+    build: ./dnd-wiki
     restart: always
     volumes:
       - dnd-wiki:/var/www/html
