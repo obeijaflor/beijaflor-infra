@@ -40,10 +40,11 @@ jobs:
 
       - name: Deploy to production
         run: |
+          ssh github@${DEST_HOST} mkdir -p ${DEST_DIR}
           rsync -avz --delete --safe-links --exclude=.git ./ github@${DEST_HOST}:${DEST_DIR}
           ssh github@${DEST_HOST} <<EOF
-              install -m 600 /home/github/secrets.env /opt/docker/secrets.env
-              cd /opt/docker
+              install -m 600 /home/github/secrets.env ${DEST_DIR}/secrets.env
+              cd ${DEST_DIR}
               sudo docker compose pull && sudo docker compose build && sudo docker compose up -d
           EOF
 
@@ -51,7 +52,7 @@ env:
   # Destination hostname
   DEST_HOST: beijaflor.es
   # Destination directory
-  DEST_DIR: /opt/docker
+  DEST_DIR: /opt/repos/beijaflor-infra
   # ssh_known_hosts file
   SSH_KNOWN_HOSTS: |-
     beijaflor.es ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgBHuMbo4un1kUg964oEWqZ71h503GcPxbCwZQLMq8T 
