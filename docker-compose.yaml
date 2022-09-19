@@ -66,8 +66,8 @@ services:
       - dnd-wiki_images:/var/www/html/wiki.beijaflor.es/images:ro
       - /mnt/data:/mnt/data:ro
     environment:
-      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,wiki.beijaflor.es
-      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,wiki.beijaflor.es
+      - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,dnd.beijaflor.es
+      - LETSENCRYPT_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,dnd.beijaflor.es
       - LETSENCRYPT_EMAIL=rachel@beijaflor.es
     depends_on:
       - nextcloud
