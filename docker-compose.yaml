@@ -33,7 +33,6 @@ services:
     restart: always
     volumes:
       - dnd-wiki:/var/www/html
-      - ./dnd-wiki/LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on:
       - db
       - redis
