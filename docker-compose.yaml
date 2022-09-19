@@ -33,7 +33,6 @@ services:
     restart: always
     volumes:
       - dnd-wiki:/var/www/html
-      - dnd-wiki_images:/var/www/html/images
       - ./dnd-wiki/LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on:
       - db
@@ -63,7 +62,6 @@ services:
       - /opt/repos/links.beijaflor.es:/var/www/html/links.beijaflor.es:ro
       - nextcloud:/var/www/html/cloud.beijaflor.es:ro
       - dnd-wiki:/var/www/html/wiki.beijaflor.es:ro
-      - dnd-wiki_images:/var/www/html/wiki.beijaflor.es/images:ro
       - /mnt/data:/mnt/data:ro
     environment:
       - VIRTUAL_HOST=beijaflor.es,www.beijaflor.es,links.beijaflor.es,cloud.beijaflor.es,dnd.beijaflor.es
@@ -124,7 +122,6 @@ volumes:
   db:
   nextcloud:
   dnd-wiki:
-  dnd-wiki_images:
   certs:
   acme:
   vhost.d:
