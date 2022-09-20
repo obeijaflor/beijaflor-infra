@@ -43,7 +43,7 @@ jobs:
           ssh github@${DEST_HOST} mkdir -p ${DEST_DIR}
           rsync -avz --delete --safe-links --exclude=.git ./ github@${DEST_HOST}:${DEST_DIR}
           ssh github@${DEST_HOST} <<EOF
-              install -m 600 /home/github/secrets.env ${DEST_DIR}/secrets.env
+              install -m 600 /home/github/nextcloud_secrets.env ${DEST_DIR}/nextcloud_secrets.env
               cd ${DEST_DIR}
               sudo docker compose pull && sudo docker compose build && sudo docker compose up -d
           EOF
