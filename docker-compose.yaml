@@ -37,7 +37,7 @@ services:
       - db
 
   nextcloud_cron:
-    image: nextcloud:24.0.5-fpm-alpine
+    image: nextcloud:24.0.6-fpm-alpine
     restart: always
     volumes:
       - nextcloud:/var/www/html
