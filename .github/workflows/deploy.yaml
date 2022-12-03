@@ -48,6 +48,14 @@ jobs:
               sudo docker compose pull && sudo docker compose build && sudo docker compose up -d
           EOF
 
+      - name: Apply migrations and final touch-ups
+          ssh github@${DEST_HOST} <<EOF
+              cd ${DEST_DIR}
+              sudo docker compose exec -u www-data nextcloud php occ db:add-missing-columns -n
+              sudo docker compose exec -u www-data nextcloud php occ db:add-missing-indices -n
+              sudo docker compose exec -u www-data nextcloud php occ db:add-missing-primary-keys -n
+          EOF
+
 env: 
   # Destination hostname
   DEST_HOST: beijaflor.es
