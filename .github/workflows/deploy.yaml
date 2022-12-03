@@ -49,6 +49,7 @@ jobs:
           EOF
 
       - name: Apply migrations and final touch-ups
+        run: |
           ssh github@${DEST_HOST} <<EOF
               cd ${DEST_DIR}
               sudo docker compose exec -u www-data nextcloud php occ db:add-missing-columns -n
